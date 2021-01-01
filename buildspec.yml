@@ -1,0 +1,17 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo Start install phase...
+      - pip install discord.py
+      - pip install boto3
+      - pip install pg8000
+      - pip install prettytable
+      - pip install pandas
+      - pip install matplotlib
+      - echo End install phase
+
+artifacts:
+  files:
+    - '**/*'
