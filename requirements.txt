@@ -1,0 +1,6 @@
+discord.py
+boto3
+pg8000
+prettytable
+pandas
+matplotlib
