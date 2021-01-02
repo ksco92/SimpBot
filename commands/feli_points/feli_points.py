@@ -1,66 +1,12 @@
-import datetime
-import glob
-import random
-
 import discord
 import matplotlib.pyplot as plt
 import pandas as pd
-from discord.ext import commands
 from prettytable import PrettyTable
 
-from get_secret import get_secret
-from run_query import run_query
-
-secret_name = 'simp/rds'
-intents = discord.Intents.default()
-intents.members = True
-bot = commands.Bot(command_prefix='!', intents=intents)
-
-
-@bot.command()
-async def culo(ctx):
-    """Returns time in which rick hasn't licked Ximena's ass."""
-
-    today = datetime.datetime.now()
-    start_date = datetime.datetime(2020, 10, 10)
-    diff = today - start_date
-    days, seconds = diff.days, diff.seconds
-    hours = seconds // 3600
-    minutes = (seconds % 3600) // 60
-    seconds = seconds % 60
-    await ctx.send(
-        'Rick no le ha chupado el culo a Ximena  en {} dias, {} horas, {} minutos y {} segundos'.format(days, hours,
-                                                                                                        minutes,
-                                                                                                        seconds))
-
-
-@bot.command()
-async def taylor(ctx):
-    """Returns a random taylor song snippet."""
-
-    files = glob.glob("taylor_lyrics/*.txt")
-    chosen_file = random.choice(files)
-    with open(chosen_file, 'r') as file:
-        song = file.read().replace('\n', '')
-        file.close()
-
-    await ctx.send(song)
-
-
-def is_valid_user(user_nickname):
-    """Checks if the nickname of a user is valid."""
-
-    secret = get_secret(secret_name)
-    query = """select custom_nickname
-               from users
-               where custom_nickname = '{}'""".format(user_nickname)
-    results = run_query(secret['host'], secret['username'], secret['password'], secret['dbInstanceIdentifier'], query,
-                        returns_results=True)
-
-    if len(results) == 1:
-        return True
-    else:
-        return False
+from simp_bot import bot, secret_name
+from utils.get_secret import get_secret
+from utils.is_valid_user import is_valid_user
+from utils.run_query import run_query
 
 
 @bot.command()
@@ -125,6 +71,3 @@ async def pointbalance(ctx):
     plt.savefig('balance.png')
 
     await ctx.send('```{}```'.format(table), file=discord.File('balance.png'))
-
-
-bot.run(get_secret('simp/bot-token')['token'])

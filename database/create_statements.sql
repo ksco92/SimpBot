@@ -5,18 +5,6 @@ create table users
   primary key (discord_user_id)
 );
 
-insert into users (discord_user_id, custom_nickname)
-values ('ksco92#3832', 'rodrigo');
-insert into users (discord_user_id, custom_nickname)
-values ('Fusukok#6888', 'charlie');
-insert into users (discord_user_id, custom_nickname)
-values ('zion_89#3240', 'rick');
-insert into users (discord_user_id, custom_nickname)
-values ('4ll_F1ct10n#4422', 'adam');
-insert into users (discord_user_id, custom_nickname)
-values ('notfelipe#7884', 'feli');
-
-drop table feli_point_transactions;
 create table feli_point_transactions
 (
   transaction_id       serial,
@@ -109,4 +97,4 @@ select u.custom_nickname,
 from feli_point_transactions fpt
        join users u
             on fpt.discord_user_id = u.discord_user_id
-group by 1
+group by 1;
