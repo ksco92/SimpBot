@@ -1,4 +1,3 @@
-from simp_bot import secret_name
 from utils.get_secret import get_secret
 from utils.run_query import run_query
 
@@ -6,6 +5,7 @@ from utils.run_query import run_query
 def is_valid_user(user_nickname):
     """Checks if the nickname of a user is valid."""
 
+    secret_name = 'simp/rds'
     secret = get_secret(secret_name)
     query = """select custom_nickname
                from users
