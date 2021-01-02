@@ -18,17 +18,9 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 
 @bot.command()
-async def simphelp(ctx):
-    await ctx.send("""Simp commands:
-    `!culo`: Returns time in which rick hasn't licked Ximena's ass.
-    `!taylor`: Returns a random taylor song snippet.
-    `!felipoint <amount> <recipient> <type>`: Adds or removes a feli points to a user.
-    `!pointbalance`: returns balance and transaction history of feli points.
-    """)
-
-
-@bot.command()
 async def culo(ctx):
+    """Returns time in which rick hasn't licked Ximena's ass."""
+
     today = datetime.datetime.now()
     start_date = datetime.datetime(2020, 10, 10)
     diff = today - start_date
@@ -44,6 +36,8 @@ async def culo(ctx):
 
 @bot.command()
 async def taylor(ctx):
+    """Returns a random taylor song snippet."""
+
     files = glob.glob("taylor_lyrics/*.txt")
     chosen_file = random.choice(files)
     with open(chosen_file, 'r') as file:
@@ -54,6 +48,8 @@ async def taylor(ctx):
 
 
 def is_valid_user(user_nickname):
+    """Checks if the nickname of a user is valid."""
+
     secret = get_secret(secret_name)
     query = """select custom_nickname
                from users
@@ -69,6 +65,8 @@ def is_valid_user(user_nickname):
 
 @bot.command()
 async def felipoint(ctx, amount, recipient, type):
+    """<amount> <recipient> <type>: Adds or removes a feli points to a user."""
+
     help_text = 'Usage is ```!felipoint <amount> <recipient> <type>```'
 
     if type not in ['add', 'remove']:
@@ -104,6 +102,8 @@ async def felipoint(ctx, amount, recipient, type):
 
 @bot.command()
 async def pointbalance(ctx):
+    """Returns balance and transaction history of feli points."""
+
     secret = get_secret(secret_name)
     query = """select * from feli_point_balance"""
     results = run_query(secret['host'], secret['username'], secret['password'], secret['dbInstanceIdentifier'], query,
