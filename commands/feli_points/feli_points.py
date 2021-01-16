@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from discord.ext import commands
 from prettytable import PrettyTable
+import os
 
 from utils.get_secret import get_secret
 from utils.is_valid_user import is_valid_user
@@ -72,6 +73,7 @@ class FeliPoints(commands.Cog):
             plt.plot([k for k in df.columns if k != 'total_balance'],
                      [int(df[y].iloc[i]) for y in df.columns if y != 'total_balance'])
         plt.legend(df.index, loc="upper left")
-        plt.savefig('balance.png')
+        output_file = os.path.join(os.path.dirname(os.path.realpath(__file__)), 'balance.png')
+        plt.savefig(output_file)
 
-        await ctx.send('```{}```'.format(table), file=discord.File('balance.png'))
+        await ctx.send('```{}```'.format(table), file=discord.File(output_file))
