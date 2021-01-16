@@ -41,6 +41,13 @@ class FeliPoints(commands.Cog):
 
         secret = get_secret(self._secret_name)
 
+        if type == 'add' and recipient != 'feli':
+            query = """insert into feli_point_transactions (discord_user_id, type, amount, given_by)
+                               values ('{}', '{}', '{}', '{}')
+                               """.format(ctx.message.author, 'remove', amount, ctx.message.author)
+            run_query(secret['host'], secret['username'], secret['password'], secret['dbInstanceIdentifier'], query,
+                      auto_commit=True)
+
         query = """insert into feli_point_transactions (discord_user_id, type, amount, given_by)
                    select discord_user_id, '{}', '{}', '{}'
                    from users
