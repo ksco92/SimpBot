@@ -1,9 +1,10 @@
+import os
+
 import discord
 import matplotlib.pyplot as plt
 import pandas as pd
 from discord.ext import commands
 from prettytable import PrettyTable
-import os
 
 from utils.get_secret import get_secret
 from utils.is_valid_user import is_valid_user
